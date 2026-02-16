@@ -1,0 +1,7 @@
+.venv
+__pycache__/
+# Ignore the sandbox repo, which is where the agent will make changes
+sandbox_repo/
+se_assistant.egg-info/
+*.pyc
+*.pyo
