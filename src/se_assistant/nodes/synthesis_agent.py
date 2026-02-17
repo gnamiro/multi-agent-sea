@@ -5,7 +5,20 @@ from se_assistant.state import TicketState
 def synthesis_agent(state: TicketState) -> Dict[str, Any]:
     last_test = next((r for r in reversed(state.tool_runs) if r.run_type == "test"), None)
 
+    # Authoritative final status derived from last test unless HITL
+    if state.hitl.required:
+        state.final_status = "stopped_for_review"
+    elif last_test and last_test.exit_code == 0:
+        state.final_status = "success"
+    elif last_test:
+        state.final_status = "failed"
+    else:
+        state.final_status = "failed"
     lines = []
+    lines.append(f"FINAL STATUS: {state.final_status}")
+    lines.append("")
+    if state.hitl.required:
+        lines.append(f"- HITL required: {state.hitl.reason}")
     lines.append("# PR Report")
     lines.append("")
     lines.append(f"**Task:** {state.task_prompt}")

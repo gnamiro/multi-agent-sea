@@ -67,6 +67,7 @@ class TicketState(BaseModel):
     task_prompt: str
     task_type: TaskType = "bugfix"
     priority: Literal["standard", "rush"] = "standard"
+    selected_files: list[str] = Field(default_factory=list)
 
     # settings
     timeout_sec: int = 30

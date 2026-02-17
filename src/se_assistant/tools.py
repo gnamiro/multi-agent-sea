@@ -2,6 +2,7 @@ from __future__ import annotations
 import os, time, subprocess, difflib
 from typing import Tuple, Optional, List, Dict, Any
 
+
 def list_repo_files(repo_ref: str) -> List[str]:
     out = []
     for root, _, files in os.walk(repo_ref):
@@ -74,7 +75,7 @@ def run_cmd(
             "stderr": f"{type(e).__name__}: {e}",
         }
 
-def tail(s: str, n: int = 1500) -> str:
-    if s is None:
+def tail(s: str, n: int = 20000) -> str:
+    if not s:
         return ""
     return s[-n:]
